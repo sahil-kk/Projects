@@ -35,13 +35,13 @@ export default function Home({ userName, completedModules, quizHistory, isDarkMo
             <div className="inline-block px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary font-medium text-sm tracking-wide shadow-[0_0_15px_rgba(var(--primary),0.2)] mb-2">
               Ready to crush your exam?
             </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground/80 to-muted-foreground pb-2">
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground/80 to-muted-foreground pb-2">
               Welcome back,<br />
               <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary via-blue-500 to-cyan-400">
                 {userName}
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground font-light max-w-2xl">
+            <p className="text-lg md:text-xl text-muted-foreground font-light max-w-2xl">
               Select a module from your syllabus below to begin mastering your skills.
             </p>
           </motion.div>
@@ -71,12 +71,12 @@ export default function Home({ userName, completedModules, quizHistory, isDarkMo
             <div className="relative z-10 max-w-2xl">
               <div className="flex items-center space-x-3 mb-4">
                 <div className="p-3 bg-primary text-primary-foreground rounded-2xl shadow-lg shadow-primary/30">
-                  <Zap size={28} fill="currentColor" />
+                  <Zap size={24} fill="currentColor" />
                 </div>
                 <span className="text-primary font-bold tracking-widest uppercase text-sm">Challenge Mode</span>
               </div>
-              <h3 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">Full Mock Exam</h3>
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              <h3 className="text-2xl md:text-3xl font-bold mb-3 tracking-tight">Full Mock Exam</h3>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                 Test your knowledge across all 7 modules. 50 perfectly balanced questions designed to simulate the real exam environment.
               </p>
             </div>
@@ -109,13 +109,13 @@ export default function Home({ userName, completedModules, quizHistory, isDarkMo
                   whileHover={{ y: -5, scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => onSelectCategory(category)}
-                  className={`w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)] text-left p-8 rounded-[2rem] border transition-all duration-300 shadow-xl relative overflow-hidden group flex flex-col justify-between min-h-[220px] ${
+                  className={`w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)] text-left p-6 md:p-8 rounded-[2rem] border transition-all duration-300 relative overflow-hidden group flex flex-col justify-between min-h-[200px] ${
                     isCompleted 
-                      ? 'border-primary/40 bg-gradient-to-br from-primary/10 to-background hover:shadow-primary/20' 
-                      : 'border-border/50 bg-card/60 backdrop-blur-xl hover:border-primary/40 hover:shadow-2xl'
+                      ? 'border-primary/40 bg-gradient-to-br from-primary/10 to-background shadow-[0_0_20px_rgba(var(--primary),0.1)] hover:shadow-[0_0_30px_rgba(var(--primary),0.25)]' 
+                      : 'border-border/60 bg-gradient-to-br from-card/80 to-background backdrop-blur-xl hover:border-primary/50 shadow-md hover:shadow-[0_0_30px_rgba(var(--primary),0.15)]'
                   }`}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                   
                   <div className="flex justify-between items-start relative z-10">
                     <div className={`p-4 rounded-2xl backdrop-blur-md border ${
@@ -137,7 +137,7 @@ export default function Home({ userName, completedModules, quizHistory, isDarkMo
                   </div>
                   
                   <div className="relative z-10 mt-6">
-                    <h3 className="text-xl md:text-2xl font-bold leading-tight mb-3 pr-4 group-hover:text-primary transition-colors">{category.title}</h3>
+                    <h3 className="text-lg md:text-xl font-bold leading-snug mb-3 pr-4 group-hover:text-primary transition-colors">{category.title}</h3>
                     <div className="flex items-center text-sm font-semibold text-muted-foreground group-hover:text-foreground transition-colors translate-y-2 opacity-80 group-hover:opacity-100 group-hover:translate-y-0 duration-300">
                       Start Practicing <ChevronRight size={18} className="ml-1" />
                     </div>
