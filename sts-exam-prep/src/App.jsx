@@ -7,13 +7,14 @@ import Results from './components/Results';
 import ReviewMistakes from './components/ReviewMistakes';
 import { quizData } from './data/quizData';
 
+
 export default function App() {
   const [userName, setUserName] = useState('');
   const [completedModules, setCompletedModules] = useState([]);
   const [currentView, setCurrentView] = useState('prompt'); // prompt, home, prequiz, active, results, review
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [quizHistory, setQuizHistory] = useState([]);
-  
+
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [quizSettings, setQuizSettings] = useState(null);
   const [quizQuestions, setQuizQuestions] = useState([]);
@@ -24,7 +25,7 @@ export default function App() {
     const savedModules = JSON.parse(localStorage.getItem('sts_completedModules') || '[]');
     const savedTheme = localStorage.getItem('sts_darkMode');
     const savedHistory = JSON.parse(localStorage.getItem('sts_quizHistory') || '[]');
-    
+
     if (savedTheme !== null) setIsDarkMode(savedTheme === 'true');
     setQuizHistory(savedHistory);
     setCompletedModules(savedModules);
@@ -63,21 +64,21 @@ export default function App() {
 
   const handleStartQuiz = (settings) => {
     setQuizSettings(settings);
-    
+
     let rawQuestions = [];
-    
+
     if (selectedCategory.id === 'mock') {
       // Mock Exam: 50 questions, 7 per module (49) + 1 random
       const moduleKeys = Object.keys(quizData);
       const questionsPerModule = Math.floor(50 / moduleKeys.length); // 7
       let unusedQuestions = [];
-      
+
       moduleKeys.forEach(key => {
         const shuffledModule = shuffleArray(quizData[key]);
         rawQuestions.push(...shuffledModule.slice(0, questionsPerModule));
         unusedQuestions.push(...shuffledModule.slice(questionsPerModule));
       });
-      
+
       const remainingNeeded = 50 - rawQuestions.length;
       if (remainingNeeded > 0) {
         unusedQuestions = shuffleArray(unusedQuestions);
@@ -89,14 +90,14 @@ export default function App() {
         rawQuestions = rawQuestions.filter(q => settings.selectedSubtopics.includes(q.subtopic));
       }
     }
-    
+
     // Shuffle options and questions
     const processedQuestions = rawQuestions.map(q => {
       const optionsWithIndex = q.options.map((opt, i) => ({ text: opt, originalIndex: i }));
       const shuffledOptions = shuffleArray(optionsWithIndex);
       const correctText = typeof q.correctAnswer === 'string' ? q.correctAnswer : q.options[q.correctAnswer];
       const newCorrectIndex = shuffledOptions.findIndex(o => o.text === correctText);
-      
+
       return {
         ...q,
         options: shuffledOptions.map(o => o.text),
@@ -110,7 +111,7 @@ export default function App() {
 
   const handleQuizComplete = (answers) => {
     setQuizResults(answers);
-    
+
     const scorePercentage = Math.round((answers.filter(a => a.isCorrect).length / answers.length) * 100);
     const historyEntry = {
       date: new Date().toISOString(),
@@ -119,7 +120,7 @@ export default function App() {
       total: answers.length,
       correct: answers.filter(a => a.isCorrect).length
     };
-    
+
     const newHistory = [historyEntry, ...quizHistory].slice(0, 50); // keep last 50
     setQuizHistory(newHistory);
     localStorage.setItem('sts_quizHistory', JSON.stringify(newHistory));
@@ -130,7 +131,7 @@ export default function App() {
       setCompletedModules(updated);
       localStorage.setItem('sts_completedModules', JSON.stringify(updated));
     }
-    
+
     setCurrentView('results');
   };
 
@@ -138,33 +139,33 @@ export default function App() {
     <div className={`${isDarkMode ? 'dark' : ''} text-foreground bg-background min-h-screen font-sans antialiased`}>
       {currentView === 'prompt' && <NamePrompt onNameSubmit={handleNameSubmit} />}
       {currentView === 'home' && (
-        <Home 
-          userName={userName} 
-          completedModules={completedModules} 
+        <Home
+          userName={userName}
+          completedModules={completedModules}
           quizHistory={quizHistory}
           isDarkMode={isDarkMode}
           onToggleTheme={toggleTheme}
-          onSelectCategory={handleSelectCategory} 
+          onSelectCategory={handleSelectCategory}
         />
       )}
       {currentView === 'prequiz' && (
-        <PreQuiz 
-          category={selectedCategory} 
+        <PreQuiz
+          category={selectedCategory}
           availableSubtopics={[...new Set((quizData[selectedCategory?.id] || []).map(q => q.subtopic))].filter(Boolean)}
-          onBack={() => setCurrentView('home')} 
-          onStart={handleStartQuiz} 
+          onBack={() => setCurrentView('home')}
+          onStart={handleStartQuiz}
         />
       )}
       {currentView === 'active' && (
-        <ActiveQuiz 
-          questions={quizQuestions} 
-          settings={quizSettings} 
-          onComplete={handleQuizComplete} 
+        <ActiveQuiz
+          questions={quizQuestions}
+          settings={quizSettings}
+          onComplete={handleQuizComplete}
           onQuit={() => setCurrentView('home')}
         />
       )}
       {currentView === 'results' && (
-        <Results 
+        <Results
           category={selectedCategory}
           answers={quizResults}
           onHome={() => setCurrentView('home')}
@@ -172,8 +173,8 @@ export default function App() {
         />
       )}
       {currentView === 'review' && (
-        <ReviewMistakes 
-          answers={quizResults} 
+        <ReviewMistakes
+          answers={quizResults}
           onBack={() => setCurrentView('results')}
         />
       )}
