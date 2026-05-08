@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { categories } from '../data/quizData';
-import { Award, ChevronRight, BookOpen, Sun, Moon, Zap, Target } from 'lucide-react';
+import { Award, ChevronRight, BookOpen, Sun, Moon, Zap, Target, Github, Mail, MessageCircle } from 'lucide-react';
 import BackgroundGrid from './ui/BackgroundGrid';
 
 export default function Home({ userName, completedModules, quizHistory, isDarkMode, onToggleTheme, onSelectCategory }) {
@@ -62,12 +62,23 @@ export default function Home({ userName, completedModules, quizHistory, isDarkMo
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
+          className="relative rounded-[2.5rem] overflow-hidden p-[2px] group shadow-2xl hover:shadow-[0_0_40px_rgba(var(--primary),0.3)] transition-shadow duration-500"
         >
+          {/* React Bits Border Glow Animation */}
+          <div 
+            className="absolute inset-[-1000%] opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+            style={{ 
+              background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, hsl(var(--primary)) 50%, transparent 100%)',
+              animation: 'spin 4s linear infinite' 
+            }} 
+          />
+          
           <button
             onClick={() => onSelectCategory({ id: 'mock', title: 'Full Mock Exam' })}
-            className="w-full text-left rounded-[2.5rem] border border-primary/30 bg-gradient-to-br from-primary/10 via-background to-background hover:from-primary/20 hover:border-primary/50 transition-all duration-500 shadow-2xl relative overflow-hidden group p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between"
+            className="w-full text-left rounded-[calc(2.5rem-2px)] bg-background relative z-10 p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between overflow-hidden"
           >
-            <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            
             <div className="relative z-10 max-w-2xl">
               <div className="flex items-center space-x-3 mb-4">
                 <div className="p-3 bg-primary text-primary-foreground rounded-2xl shadow-lg shadow-primary/30">
@@ -147,6 +158,32 @@ export default function Home({ userName, completedModules, quizHistory, isDarkMo
             })}
           </motion.div>
         </div>
+
+        {/* Footer Section */}
+        <motion.footer 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
+          className="mt-20 pt-8 pb-4 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-muted-foreground"
+        >
+          <div>
+            <p>© {new Date().getFullYear()} STS Exam Prep. Build with ❤️</p>
+          </div>
+          <div className="flex items-center space-x-6">
+            <a href="https://wa.me/919188776434" target="_blank" rel="noopener noreferrer" className="hover:text-green-500 transition-colors flex items-center">
+              <MessageCircle size={20} className="mr-2" />
+              WhatsApp
+            </a>
+            <a href="mailto:hello@sahilkk.site" className="hover:text-primary transition-colors flex items-center">
+              <Mail size={20} className="mr-2" />
+              Mail
+            </a>
+            <a href="https://github.com/sahil-kk" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors flex items-center">
+              <Github size={20} className="mr-2" />
+              GitHub
+            </a>
+          </div>
+        </motion.footer>
       </div>
     </div>
   );
