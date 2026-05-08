@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Zap, 
-  Layers, 
-  Calendar, 
-  RefreshCw, 
-  CheckCircle2, 
-  XCircle, 
+import {
+  Zap,
+  Layers,
+  Calendar,
+  RefreshCw,
+  CheckCircle2,
+  XCircle,
   ArrowRight,
   BookOpen,
   Trophy,
@@ -45,11 +45,11 @@ const itemVariants = {
 
 function TextScramble({ text }) {
   const [displayText, setDisplayText] = useState(text);
-  
+
   useEffect(() => {
     let iteration = 0;
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+";
-    
+
     const interval = setInterval(() => {
       setDisplayText(text.split('').map((letter, index) => {
         if (index < iteration) {
@@ -57,14 +57,14 @@ function TextScramble({ text }) {
         }
         return chars[Math.floor(Math.random() * chars.length)];
       }).join(''));
-      
+
       if (iteration >= text.length) {
         clearInterval(interval);
       }
-      
+
       iteration += 1 / 3;
     }, 30);
-    
+
     return () => clearInterval(interval);
   }, [text]);
 
@@ -80,7 +80,7 @@ function App() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [incorrectTopics, setIncorrectTopics] = useState(new Set());
-  const [allIncorrectTopics, setAllIncorrectTopics] = useState(new Set()); 
+  const [allIncorrectTopics, setAllIncorrectTopics] = useState(new Set());
   const [studyContent, setStudyContent] = useState(null);
 
   const shuffle = (array) => [...array].sort(() => Math.random() - 0.5);
@@ -129,13 +129,13 @@ function App() {
 
   const handleOptionSelect = (option) => {
     if (showFeedback) return;
-    
+
     setSelectedOption(option);
     setShowFeedback(true);
-    
+
     const currentQ = currentQuestions[currentIndex];
     const isCorrect = option === currentQ.correct;
-    
+
     if (isCorrect) {
       setScore(s => s + 1);
     } else {
@@ -151,6 +151,7 @@ function App() {
       });
     }
   };
+
   const nextQuestion = () => {
     if (currentIndex + 1 < currentQuestions.length) {
       setCurrentIndex(currentIndex + 1);
@@ -166,26 +167,26 @@ function App() {
   };
 
   const studyTopics = [
-    { key: 'greetings', title: 'Greetings & Intros', desc: 'Basic daily conversations', icon: <MessageCircle size={20}/> },
-    { key: 'articles', title: 'Articles', desc: 'Definite, indefinite, partitive', icon: <Type size={20}/> },
-    { key: 'prepositions', title: 'Prepositions', desc: 'Locations & rules', icon: <MapPin size={20}/> },
-    { key: 'verbs', title: 'Verbs', desc: 'ER, IR, & irregular forms', icon: <Activity size={20}/> },
-    { key: 'adjectives', title: 'Adjectives', desc: 'Agreement & possessive', icon: <ListFilter size={20}/> },
-    { key: 'numbers', title: 'Numbers (1-100)', desc: 'Counting from 1 to 100', icon: <Hash size={20}/> },
-    { key: 'time', title: 'Time', desc: 'Telling time & fractions', icon: <Clock size={20}/> },
-    { key: 'days', title: 'Days', desc: 'Days of the week', icon: <CalendarDays size={20}/> },
-    { key: 'months', title: 'Months', desc: 'Months of the year', icon: <Calendar size={20}/> },
-    { key: 'colors', title: 'Colors', desc: 'Color vocabulary & agreement', icon: <Palette size={20}/> },
-    { key: 'nationalities', title: 'Nationalities', desc: 'Countries and origins', icon: <Flag size={20}/> },
-    { key: 'body_pain', title: 'Body Parts & Pain', desc: 'Medical expressions', icon: <HeartPulse size={20}/> },
-    { key: 'culture', title: 'Culture & Monuments', desc: 'Major days, landmarks', icon: <Landmark size={20}/> }
+    { key: 'greetings', title: 'Greetings & Intros', desc: 'Basic daily conversations', icon: <MessageCircle size={20} /> },
+    { key: 'articles', title: 'Articles', desc: 'Definite, indefinite, partitive', icon: <Type size={20} /> },
+    { key: 'prepositions', title: 'Prepositions', desc: 'Locations & rules', icon: <MapPin size={20} /> },
+    { key: 'verbs', title: 'Verbs', desc: 'ER, IR, & irregular forms', icon: <Activity size={20} /> },
+    { key: 'adjectives', title: 'Adjectives', desc: 'Agreement & possessive', icon: <ListFilter size={20} /> },
+    { key: 'numbers', title: 'Numbers (1-100)', desc: 'Counting from 1 to 100', icon: <Hash size={20} /> },
+    { key: 'time', title: 'Time', desc: 'Telling time & fractions', icon: <Clock size={20} /> },
+    { key: 'days', title: 'Days', desc: 'Days of the week', icon: <CalendarDays size={20} /> },
+    { key: 'months', title: 'Months', desc: 'Months of the year', icon: <Calendar size={20} /> },
+    { key: 'colors', title: 'Colors', desc: 'Color vocabulary & agreement', icon: <Palette size={20} /> },
+    { key: 'nationalities', title: 'Nationalities', desc: 'Countries and origins', icon: <Flag size={20} /> },
+    { key: 'body_pain', title: 'Body Parts & Pain', desc: 'Medical expressions', icon: <HeartPulse size={20} /> },
+    { key: 'culture', title: 'Culture & Monuments', desc: 'Major days, landmarks', icon: <Landmark size={20} /> }
   ];
 
   return (
     <>
       <div className="bg-grid"></div>
       <div className="ambient-glow"></div>
-      
+
       <div className="app-container">
         {screen === 'home' && (
           <motion.div initial="hidden" animate="show" variants={containerVariants}>
@@ -198,13 +199,13 @@ function App() {
             </div>
 
             <motion.div variants={itemVariants} className="tab-container">
-              <div 
+              <div
                 className={`tab-btn ${homeTab === 'practice' ? 'active' : ''}`}
                 onClick={() => setHomeTab('practice')}
               >
                 Mock Tests
               </div>
-              <div 
+              <div
                 className={`tab-btn ${homeTab === 'study' ? 'active' : ''}`}
                 onClick={() => setHomeTab('study')}
               >
@@ -221,7 +222,7 @@ function App() {
                     <div className="card-desc">5 random questions across topics</div>
                   </div>
                 </motion.div>
-                
+
                 <motion.div variants={itemVariants} className="bento-card primary" onClick={() => startQuiz('full')}>
                   <div className="card-icon"><BrainCircuit size={20} /></div>
                   <div>
@@ -229,7 +230,7 @@ function App() {
                     <div className="card-desc">30 questions. Full syllabus coverage</div>
                   </div>
                 </motion.div>
-                
+
                 <motion.div variants={itemVariants} className="bento-card" onClick={() => startQuiz('daily')}>
                   <div className="card-icon"><Calendar size={20} /></div>
                   <div>
@@ -237,7 +238,7 @@ function App() {
                     <div className="card-desc">10 balanced questions</div>
                   </div>
                 </motion.div>
-                
+
                 <motion.div variants={itemVariants} className="bento-card" onClick={() => startQuiz('retry')}>
                   <div className="card-icon"><RefreshCw size={20} /></div>
                   <div>
@@ -272,21 +273,14 @@ function App() {
                 <Activity size={14} />
                 {currentIndex + 1} / {currentQuestions.length}
               </div>
-              <button onClick={restart} className="quit-btn">
-                <XCircle size={16} /> Quit
-              </button>
+              <div className="topic-tag">{currentQuestions[currentIndex].topic.replace('_', ' ')}</div>
             </div>
 
             <h2 className="question-text">{currentQuestions[currentIndex].question}</h2>
-            
+
             <div className="options-container">
               {currentQuestions[currentIndex].options.map((opt, i) => {
                 let btnClass = "option-btn";
-                
-                if (selectedOption === opt && !showFeedback) {
-                  btnClass += " selected";
-                }
-
                 if (showFeedback) {
                   if (opt === currentQuestions[currentIndex].correct) {
                     btnClass += " correct";
@@ -298,8 +292,8 @@ function App() {
                 }
 
                 return (
-                  <button 
-                    key={i} 
+                  <button
+                    key={i}
                     className={btnClass}
                     onClick={() => handleOptionSelect(opt)}
                     disabled={showFeedback}
@@ -322,13 +316,13 @@ function App() {
                     <><XCircle size={20} /> Incorrect</>
                   )}
                 </div>
-                
+
                 {selectedOption !== currentQuestions[currentIndex].correct && (
                   <div style={{ marginBottom: '8px', fontWeight: '500', color: 'var(--text-main)' }}>
                     Correct answer: {currentQuestions[currentIndex].correct}
                   </div>
                 )}
-                
+
                 <div className="feedback-text">
                   {currentQuestions[currentIndex].explanation}
                 </div>
@@ -346,11 +340,11 @@ function App() {
             <div className="results-icon">
               <Trophy size={40} />
             </div>
-            
+
             <div className="score-huge">
-              {score}<span style={{fontSize: '2.5rem', color: 'var(--text-muted)'}}>/{currentQuestions.length}</span>
+              {score}<span style={{ fontSize: '2.5rem', color: 'var(--text-muted)' }}>/{currentQuestions.length}</span>
             </div>
-            
+
             <div className="accuracy-text">
               Accuracy: {Math.round((score / currentQuestions.length) * 100)}%
             </div>
@@ -378,21 +372,21 @@ function App() {
               <h2 style={{ fontSize: '1.5rem', fontWeight: '600', color: 'var(--text-main)' }}>
                 {studyContent.title}
               </h2>
-              <button 
-                className="btn btn-secondary" 
-                onClick={() => setScreen('home')} 
+              <button
+                className="btn btn-secondary"
+                onClick={() => setScreen('home')}
                 style={{ width: 'auto', padding: '8px 16px', fontSize: '0.9rem' }}
               >
                 Back to Hub
               </button>
             </div>
-            
+
             <div className="sheet-list">
               {studyContent.items.map((item, idx) => (
                 <div key={idx} className="sheet-item">
-                  <div className="sheet-q" style={{textTransform: 'capitalize'}}>{item.term}</div>
+                  <div className="sheet-q" style={{ textTransform: 'capitalize' }}>{item.term}</div>
                   <div className="sheet-a">
-                    <ArrowRight size={16} className="inline-icon" /> <span style={{color: 'var(--correct)'}}>{item.definition}</span>
+                    <ArrowRight size={16} className="inline-icon" /> <span style={{ color: 'var(--correct)' }}>{item.definition}</span>
                   </div>
                 </div>
               ))}
